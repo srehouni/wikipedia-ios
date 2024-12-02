@@ -1223,6 +1223,12 @@ NSString *const WMFLanguageVariantAlertsLibraryVersion = @"WMFLanguageVariantAle
                 // For "View on a map" action to succeed, view mode has to be set to map.
                 [[self placesViewController] updateViewModeToMap];
                 [[self placesViewController] showArticleURL:articleURL];
+            } else if (activity.userInfo[@"latitude"] && activity.userInfo[@"longitude"]) {
+                double latitude = [activity.userInfo[@"latitude"] doubleValue];
+                double longitude = [activity.userInfo[@"longitude"] doubleValue];
+                
+                CLLocation* location = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
+                [[self placesViewController] zoomAndPanMapViewToLocation:location];
             }
         } break;
         case WMFUserActivityTypeContent: {
